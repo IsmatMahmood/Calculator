@@ -15,12 +15,20 @@ namespace Calculator
 
         private static void PerformOneCalculation()
         {
-            string op = Op(); // gets operator using method below
-            int[] numbers = GetNumbers(op);
+            string operation = GetOperator(); 
+            int iterations = GetIterations(operation);
+            int[] numbers = GetNumbers(operation, iterations);
 
-            int answer = Answer(op, numbers);
+            int answer = Answer(operation, numbers);
 
             Console.WriteLine("\nYour answer is: " + answer);
+        }
+
+        private static int GetIterations(string operation)
+        {
+            Console.WriteLine("How many numbers would you like to {0}? : ", operation);
+            string iterations = Console.ReadLine();
+            return int.Parse(iterations);
         }
 
         private static void PrintWelcomeMessage()
@@ -29,14 +37,12 @@ namespace Calculator
             Console.WriteLine("==========================");
         }
 
-        private static int[] GetNumbers(string op) 
+        private static int[] GetNumbers(string operation, int iterations) 
         {
-            Console.WriteLine("How many numbers would you like to {0}? : ", op);
-            string iterations = Console.ReadLine();
-            int Iterations = int.Parse(iterations);
-            int[] numbers = new int[Iterations];
             
-            for (int i = 0;i<Iterations;i++)
+            int[] numbers = new int[iterations];
+            
+            for (int i = 0;i<iterations;i++)
             {
                 Console.WriteLine("Please enter number {0}: ", i+1);
                 string digit = Console.ReadLine();
@@ -45,24 +51,24 @@ namespace Calculator
             return numbers;
         }
 
-        private static int Answer(string op, int[] numbers)
+        private static int Answer(string operation, int[] numbers)
         {
             int answer = numbers[0];
             for (int i = 1; i < numbers.Length; i++)
             {
-                if (op == "+")
+                if (operation == "+")
                 {
                     answer = answer + numbers[i];
                 }
-                else if (op == "-")
+                else if (operation == "-")
                 {
                     answer = answer - numbers[i];
                 }
-                else if (op == "/")
+                else if (operation == "/")
                 {
                     answer = answer /numbers[i];
                 }
-                else if (op == "*")
+                else if (operation == "*")
                 {
                     answer = answer * numbers[i];
                 }
@@ -71,7 +77,7 @@ namespace Calculator
             return answer;
         }
 
-        private static string Op()
+        private static string GetOperator()
         {
             Console.WriteLine("\nPlease enter an operator: ");
             string val = Console.ReadLine();
