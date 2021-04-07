@@ -8,9 +8,11 @@ namespace Calculator
         static void Main(string[] args)
         {
             PrintWelcomeMessage();
-            PerformOneCalculation();
-                    
-            Console.ReadLine();
+            while (true)
+            {
+                PerformOneCalculation();
+                Console.ReadLine();
+            } 
         }
 
         private static void PerformOneCalculation()
@@ -28,7 +30,8 @@ namespace Calculator
         {
             Console.WriteLine("How many numbers would you like to {0}? : ", operation);
             string iterations = Console.ReadLine();
-            return int.Parse(iterations);
+            int Iterations = ValidityCheckForDigit(iterations);
+            return Iterations;
         }
 
         private static void PrintWelcomeMessage()
@@ -46,9 +49,24 @@ namespace Calculator
             {
                 Console.WriteLine("Please enter number {0}: ", i+1);
                 string digit = Console.ReadLine();
-                numbers[i] = int.Parse(digit);
+                numbers[i] = ValidityCheckForDigit(digit);
+                
             }
             return numbers;
+        }
+
+        private static int ValidityCheckForDigit(string digit)
+        {
+            string Digit = digit;
+            int IntDigit;
+            bool isNumeric = int.TryParse(Digit, out IntDigit);
+            while (isNumeric == false)
+            {
+                Console.WriteLine("You have entered an invalid number, please try again: ");
+                Digit = Console.ReadLine();
+                isNumeric = int.TryParse(Digit, out IntDigit);
+            }
+            return IntDigit;
         }
 
         private static int Answer(string operation, int[] numbers)
