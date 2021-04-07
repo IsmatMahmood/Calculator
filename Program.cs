@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace Calculator
 {
     class Program
@@ -8,44 +9,57 @@ namespace Calculator
         {
             Console.WriteLine("Welcome to the Calculator!");
             Console.WriteLine("==========================");
-            string op = Op();
-           // Console.WriteLine("\nYour valid operator is : " + op);
-            
-
-            Console.WriteLine("\nPlease enter your first number: ");
-            string firstNumber = Console.ReadLine();
-            Console.WriteLine("Please enter your second number: ");
-            string secondNumber = Console.ReadLine();
-
-            //int firstDigit = int.Parse(firstNumber);
-            //int secondDigit = int.Parse(secondNumber);
-
-            int answer = Answer(op, int.Parse(firstNumber), int.Parse(secondNumber));
+            string op = Op(); // gets operator using method below
+            int[] numbers = GetNumbers(op);
+                   
+            int answer = Answer(op, numbers);
             
             Console.WriteLine("\nYour answer is: " + answer);
-
-
+         
             Console.ReadLine();
         }
-
-        private static int Answer(string op, int firstDigit, int secondDigit)
+        
+        private static int[] GetNumbers(string op) 
         {
-            int answer = 0;
-            if (op == "+")
+            Console.WriteLine("How many numbers would you like to {0}? : ", op);
+            string iterations = Console.ReadLine();
+            int Iterations = int.Parse(iterations);
+            int[] numbers = new int[Iterations];
+            
+            for (int i = 0;i<Iterations;i++)
             {
-                answer = firstDigit + secondDigit;
+                Console.WriteLine("Please enter number {0}: ", i+1);
+                string digit = Console.ReadLine();
+                numbers[i] = int.Parse(digit);
             }
-            else if (op == "-")
+            return numbers;
+        }
+
+        private static int Answer(string op, int[] numbers)
+        {
+            int answer = numbers[0];
+            if (numbers is null)
             {
-                answer = firstDigit - secondDigit;
+                Console.WriteLine("there are no numbers to operate on them");
             }
-            else if (op == "/")
+            for (int i = 1; i < numbers.Length; i++)
             {
-                answer = firstDigit / secondDigit;
-            }
-            else if (op == "*")
-            {
-                answer = firstDigit * secondDigit;
+                if (op == "+")
+                {
+                    answer = answer + numbers[i];
+                }
+                else if (op == "-")
+                {
+                    answer = answer - numbers[i];
+                }
+                else if (op == "/")
+                {
+                    answer = answer /numbers[i];
+                }
+                else if (op == "*")
+                {
+                    answer = answer * numbers[i];
+                }
             }
             
             return answer;
