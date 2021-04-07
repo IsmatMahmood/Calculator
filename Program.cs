@@ -7,18 +7,28 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Calculator!");
-            Console.WriteLine("==========================");
-            string op = Op(); // gets operator using method below
-            int[] numbers = GetNumbers(op);
-                   
-            int answer = Answer(op, numbers);
-            
-            Console.WriteLine("\nYour answer is: " + answer);
-         
+            PrintWelcomeMessage();
+            PerformOneCalculation();
+                    
             Console.ReadLine();
         }
-        
+
+        private static void PerformOneCalculation()
+        {
+            string op = Op(); // gets operator using method below
+            int[] numbers = GetNumbers(op);
+
+            int answer = Answer(op, numbers);
+
+            Console.WriteLine("\nYour answer is: " + answer);
+        }
+
+        private static void PrintWelcomeMessage()
+        {
+            Console.WriteLine("Welcome to the Calculator!");
+            Console.WriteLine("==========================");
+        }
+
         private static int[] GetNumbers(string op) 
         {
             Console.WriteLine("How many numbers would you like to {0}? : ", op);
@@ -38,10 +48,6 @@ namespace Calculator
         private static int Answer(string op, int[] numbers)
         {
             int answer = numbers[0];
-            if (numbers is null)
-            {
-                Console.WriteLine("there are no numbers to operate on them");
-            }
             for (int i = 1; i < numbers.Length; i++)
             {
                 if (op == "+")
